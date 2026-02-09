@@ -97,7 +97,7 @@ function encryptColumnar(text, key) {
 
   let counter = 1;
   for (let ch of ALPH_EN) {
-    if (ch in key) {
+    if (key.includes(ch)) {
       for (let keyChar in key) {
         if (key[keyChar] === ch) {
           matrix[keyChar] = counter;
