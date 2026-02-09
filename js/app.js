@@ -92,15 +92,18 @@ downloadBtn.onclick = () => {
 
 // алгоритмы
 function encryptColumnar(text, key) {
-  text.split(" ").join("");
+  text = text.split(" ").join("");
+
   let matrix = new Array(key.length);
+  key = key.toUpperCase();
 
   let counter = 1;
+
   for (let ch of ALPH_EN) {
     if (key.includes(ch)) {
-      for (let keyChar in key) {
-        if (key[keyChar] === ch) {
-          matrix[keyChar] = counter;
+      for (let i = 0; i < key.length; i++) {
+        if (key[i] === ch) {
+          matrix[i] = counter;
           counter++;
         }
       }
@@ -110,6 +113,7 @@ function encryptColumnar(text, key) {
   console.log(matrix);
   return text;
 }
+
 
 function decryptColumnar(text, key) {
   // TODO
