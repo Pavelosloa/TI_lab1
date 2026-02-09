@@ -8,8 +8,8 @@ const fileInput = document.getElementById("fileInput");
 const loadFileBtn = document.getElementById("loadFile");
 const downloadBtn = document.getElementById("downloadFile");
 
-const ALPH_EN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const ALPH_RU = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+const ALPH_EN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+const ALPH_RU = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ ";
 
 
 // Ограничение ввода
