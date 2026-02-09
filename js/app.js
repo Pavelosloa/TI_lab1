@@ -8,8 +8,8 @@ const fileInput = document.getElementById("fileInput");
 const loadFileBtn = document.getElementById("loadFile");
 const downloadBtn = document.getElementById("downloadFile");
 
-const ALPH_EN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
-const ALPH_RU = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ ";
+const ALPH_EN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const ALPH_RU = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
 
 
 // Ограничение ввода
@@ -28,7 +28,7 @@ function applyInputRestriction() {
   const algo = algoEl.value;
   const alphabet = algo === "col" ? ALPH_EN : ALPH_RU;
 
-  inputEl.value = filterInput(inputEl.value, alphabet);
+  inputEl.value = filterInput(inputEl.value, alphabet + " ");
   keyEl.value = filterInput(keyEl.value, alphabet);
 }
 
