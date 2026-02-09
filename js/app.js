@@ -103,7 +103,7 @@ function encryptColumnar(text, key) {
     if (key.includes(ch)) {
       for (let i = 0; i < key.length; i++) {
         if (key[i] === ch) {
-          matrix[i] = counter;
+          matrix[i][0] = counter;
           counter++;
         }
       }
