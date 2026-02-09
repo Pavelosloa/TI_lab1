@@ -12,9 +12,7 @@ const ALPH_EN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const ALPH_RU = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
 
 
-// ----------------------
 // Ограничение ввода
-// ----------------------
 function filterInput(value, alphabet) {
   value = value.toUpperCase();
   let result = "";
@@ -39,9 +37,7 @@ keyEl.addEventListener("input", applyInputRestriction);
 algoEl.addEventListener("change", applyInputRestriction);
 
 
-// ----------------------
 // Кнопки
-// ----------------------
 encryptBtn.onclick = () => run(true);
 decryptBtn.onclick = () => run(false);
 
@@ -71,9 +67,7 @@ function run(isEncrypt) {
 }
 
 
-// ----------------------
 // Работа с файлами
-// ----------------------
 loadFileBtn.onclick = async () => {
   const file = fileInput.files[0];
   if (!file) return;
@@ -96,10 +90,7 @@ downloadBtn.onclick = () => {
 };
 
 
-// ----------------------
-// Заготовки алгоритмов
-// ----------------------
-
+// алгоритмы
 function encryptColumnar(text, key) {
   // TODO: улучшенный столбцовый метод
   return text;
