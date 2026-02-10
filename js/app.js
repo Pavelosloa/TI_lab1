@@ -44,7 +44,7 @@ decryptBtn.onclick = () => run(false);
 function run(isEncrypt) {
   const algo = algoEl.value;
   const key = keyEl.value;
-  const text = inputEl.value;
+  const text = inputEl.value.split(" ").join("");
 
   if (!key) {
     alert("Введите ключ");
@@ -52,6 +52,7 @@ function run(isEncrypt) {
   }
 
   let result = "";
+
 
   if (algo === "col") {
     result = isEncrypt
@@ -63,6 +64,13 @@ function run(isEncrypt) {
       : decryptVigenereAutokey(text, key);
   }
 
+  if (isEncrypt){
+    for (let i = result.length; i > 5; i -= 5) {
+      result = result.slice(0, i - 5) + " " + result.slice(i - 5);
+    }
+  }
+
+
   outputEl.value = result;
 }
 
@@ -72,13 +80,21 @@ loadFileBtn.onclick = async () => {
   const file = fileInput.files[0];
   if (!file) return;
 
-  const text = await file.text();
-  inputEl.value = text.toUpperCase();
+  const content = await file.text();
+
+  const lines = content.replace(/\r/g, "").split("\n");
+
+  if (lines.length === 0) return;
+
+  keyEl.value = lines[0].toUpperCase();
+  inputEl.value = lines.slice(1).join("\n").toUpperCase();
+
   applyInputRestriction();
 };
 
+
 downloadBtn.onclick = () => {
-  const blob = new Blob([outputEl.value], { type: "text/plain" });
+  const blob = new Blob([outputEl.value], {type: "text/plain"});
   const url = URL.createObjectURL(blob);
 
   const a = document.createElement("a");
@@ -92,10 +108,11 @@ downloadBtn.onclick = () => {
 
 // алгоритмы
 function encryptColumnar(text, key) {
-  text = text.split(" ").join("");
+  let result = "";
 
-  let matrix = new Array(key.length);
   key = key.toUpperCase();
+
+  let matrix = Array.from({length: key.length}, () => [0]);
 
   let counter = 1;
 
@@ -110,22 +127,87 @@ function encryptColumnar(text, key) {
     }
   }
 
+  counter = 0;
+  for (let ch of text) {
+    matrix[counter++].push(ch);
+    if (counter > matrix.length - 1) {
+      counter = 0;
+    }
+  }
+
+  for (let i = 1; i <= matrix.length; i++) {
+    let col = matrix.find(val => val[0] === i);
+    for (let ch of col.slice(1)) {
+      result += ch;
+    }
+  }
+
   console.log(matrix);
-  return text;
+  return result;
 }
 
 
 function decryptColumnar(text, key) {
-  // TODO
-  return text;
+  key = key.toUpperCase();
+  const cols = key.length;
+  let result = "";
+
+  // Порядок столбцов
+  let order = Array(cols).fill(0);
+  let counter = 1;
+
+  for (let ch of ALPH_EN) {
+    for (let i = 0; i < cols; i++) {
+      if (key[i] === ch) {
+        order[i] = counter++;
+      }
+    }
+  }
+
+  // Длины столбцов (в исходном порядке)
+  const baseRows = Math.floor(text.length / cols);
+  const extra = text.length % cols;
+
+  let colLengths = [];
+  for (let i = 0; i < cols; i++) {
+    colLengths[i] = baseRows + (i < extra ? 1 : 0);
+  }
+
+  // Матрица столбцов
+  let columns = Array(cols).fill("").map(() => "");
+
+  let pos = 0;
+
+  // заполняем в порядке ключа (1,2,3...)
+  for (let num = 1; num <= cols; num++) {
+    let colIndex = order.indexOf(num);
+    let len = colLengths[colIndex];
+
+    columns[colIndex] = text.slice(pos, pos + len);
+    pos += len;
+  }
+
+  // Чтение по строкам
+  const maxRows = Math.max(...colLengths);
+
+  for (let row = 0; row < maxRows; row++) {
+    for (let col = 0; col < cols; col++) {
+      if (columns[col][row]) {
+        result += columns[col][row];
+      }
+    }
+  }
+
+  return result;
 }
 
+
 function encryptVigenereAutokey(text, key) {
-  // TODO
-  return text;
+  let result = "";
+  return result;
 }
 
 function decryptVigenereAutokey(text, key) {
-  // TODO
-  return text;
+  let result = "";
+  return result;
 }
