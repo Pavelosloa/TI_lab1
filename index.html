@@ -1,51 +1,56 @@
 <!-- File: index.html -->
-<section class="controls">
-  <label>Алгоритм
-    <select id="algo">
-      <option value="col">Столбцовый (англ.)</option>
-      <option value="vig">Виженер (рус., autokey)</option>
-    </select>
-  </label>
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Шифрование — столбцовый / Виженер</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+<main class="container">
+  <h1>Шифрование: улучшенный столбцовый метод / Виженер (autokey)</h1>
 
+  <section class="controls">
+    <label>Алгоритм
+      <select id="algo">
+        <option value="col">Столбцовый (англ.)</option>
+        <option value="vig">Виженер (рус., autokey)</option>
+      </select>
+    </label>
 
-  <label>Ключ
-    <input id="key" type="text" placeholder="Введите ключ" />
-  </label>
+    <label>Ключ
+      <input id="key" type="text" placeholder="Введите ключ" />
+    </label>
 
+    <label>Ввод текста
+      <textarea id="inputText" rows="8" placeholder="Текст для шифрования/дешифрования"></textarea>
+    </label>
 
-  <label>Ввод текста
-    <textarea id="inputText" rows="8" placeholder="Текст для шифрования/дешифрования"></textarea>
-  </label>
+    <div class="buttons">
+      <button id="encryptBtn">Зашифровать</button>
+      <button id="decryptBtn">Дешифровать</button>
+    </div>
 
+    <label>Результат
+      <textarea id="outputText" rows="8" readonly></textarea>
+    </label>
 
-  <div class="buttons">
-    <button id="encryptBtn">Зашифровать</button>
-    <button id="decryptBtn">Дешифровать</button>
-  </div>
+    <div class="file-row">
+      <input id="fileInput" type="file" accept=".txt" />
+      <button id="loadFile">Загрузить файл в поле ввода</button>
+      <button id="downloadFile">Скачать результат</button>
+    </div>
+  </section>
 
-
-  <label>Результат
-    <textarea id="outputText" rows="8" readonly></textarea>
-  </label>
-
-
-  <div class="file-row">
-    <input id="fileInput" type="file" accept=".txt" />
-    <button id="loadFile">Загрузить файл в поле ввода</button>
-    <button id="downloadFile">Скачать результат</button>
-  </div>
-</section>
-
-
-<section class="info">
-  <h2>Примечания</h2>
-  <ul>
-    <li>Программа шифрует только буквы выбранного алфавита; остальные символы сохраняются на своих позициях.</li>
-    <li>Ключ задаётся с клавиатуры. Для Виженера реализован autokey-подход (ключ дополняется открытым текстом).</li>
-  </ul>
-</section>
+  <section class="info">
+    <h2>Примечания</h2>
+    <ul>
+      <li>Программа шифрует только буквы выбранного алфавита.</li>
+      <li>Ключ задаётся с клавиатуры. Для Виженера реализован autokey-подход (ключ дополняется открытым текстом).</li>
+    </ul>
+  </section>
 </main>
-
 
 <script type="module" src="./js/app.js"></script>
 </body>

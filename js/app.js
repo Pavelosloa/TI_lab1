@@ -64,11 +64,10 @@ function run(isEncrypt) {
       : decryptVigenereAutokey(text, key);
   }
 
-  if (isEncrypt){
-    for (let i = result.length; i > 5; i -= 5) {
-      result = result.slice(0, i - 5) + " " + result.slice(i - 5);
-    }
+  if (isEncrypt) {
+    result = result.match(/.{1,5}/g).join(" ");
   }
+
 
 
   outputEl.value = result;
@@ -201,13 +200,39 @@ function decryptColumnar(text, key) {
   return result;
 }
 
-
 function encryptVigenereAutokey(text, key) {
   let result = "";
+  let autokey = key;
+
+  if (autokey.length > text.length) {
+    autokey = autokey.slice(0, text.length);
+  } else {
+    let counter = 0;
+    while (autokey.length < text.length) {
+      autokey += text[counter++];
+    }
+  }
+  console.log(autokey);
+
+  for (let i = 0; i < text.length; i++) {
+    let charIdx = (ALPH_RU.indexOf(text[i]) + ALPH_RU.indexOf(autokey[i])) % ALPH_RU.length;
+    result += ALPH_RU[charIdx];
+  }
+
   return result;
 }
 
 function decryptVigenereAutokey(text, key) {
   let result = "";
+  let autokey = key;
+
+  for (let i = 0; i < text.length; i++) {
+    let charIdx = (ALPH_RU.indexOf(text[i]) - ALPH_RU.indexOf(autokey[i]) + ALPH_RU.length) % ALPH_RU.length;
+    result += ALPH_RU[charIdx];
+    if (autokey.length < text.length) {
+      autokey += ALPH_RU[charIdx];
+    }
+  }
+
   return result;
 }
